@@ -508,6 +508,168 @@
         .social-links a:hover {
             opacity: 0.7;
         }
+ /* Emergency form */
+        .emergency-form {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #f5f5f5;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .service-card.selected {
+            border-color: #ff4444;
+            background: #fff5f5;
+            transform: translateY(-5px);
+        }
+
+        .service-card.selected::after {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #4cd137;
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .water-service { color: #00a8ff; }
+        .oxygen-service { color: #4cd137; }
+        .fire-service { color: #ff6b6b; }
+
+        .service-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .service-details {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .service-card.selected .service-details {
+            display: block;
+        }
+
+        .submit-btn {
+            background: #ff4444;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            background: #cc0000;
+        }
+
+        .emergency-form {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #f5f5f5;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .service-card.selected {
+            border-color: #ff4444;
+            background: #fff5f5;
+            transform: translateY(-5px);
+        }
+
+        .service-card.selected::after {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #4cd137;
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .water-service { color: #00a8ff; }
+        .oxygen-service { color: #4cd137; }
+        .fire-service { color: #ff6b6b; }
+
+        .service-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .service-details {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .service-card.selected .service-details {
+            display: block;
+        }
+
+        .submit-btn {
+            background: #ff4444;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            background: #cc0000;
+        }
 
         @media (min-width: 768px) {
             .footer-content {
@@ -551,6 +713,88 @@
         }
          
     </style>
+    <style>
+        .emergency-form {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: #f5f5f5;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .service-card.selected {
+            border-color: #ff4444;
+            background: #fff5f5;
+            transform: translateY(-5px);
+        }
+
+        .service-card.selected::after {
+            content: "\f00c";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #4cd137;
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .water-service { color: #00a8ff; }
+        .oxygen-service { color: #4cd137; }
+        .fire-service { color: #ff6b6b; }
+
+        .service-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .service-details {
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .service-card.selected .service-details {
+            display: block;
+        }
+
+        .submit-btn {
+            background: #ff4444;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+            background: #cc0000;
+        }
+    </style>
 </head>
 <body>
     <div class="emergency-alert">
@@ -561,44 +805,100 @@
         <h1>Emergency Cloud Drone Fire Response</h1>
         <p>Rapid aerial assistance when seconds matter</p>
         <button class="emergency-btn" onclick="triggerEmergency()">
-            <i class="fas fa-bell"></i> Request Immediate Help
+            <i class="fas fa-bell"></i>Request Immediate Help
         </button>
     </section>
 
     <div class="request-container">
-        <form class="emergency-form" onsubmit="handleSubmit(event)">
-            <div class="form-group">
-                <label>Your Name</label>
-                <input type="text" class="form-input" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Phone Number</label>
-                <input type="tel" class="form-input" required>
-            </div>
-
-            <div class="form-group">
-                <label>Emergency Location</label>
-                <input type="text" class="form-input" required>
-            </div>
-
-            <div class="form-group">
-                <label>Emergency Type</label>
-                <select class="form-input" required>
-                    <option value="">Select emergency type</option>
-                    <option>Building Fire</option>
-                    <option>Wildfire</option>
-                    <option>Industrial Accident</option>
-                    <option>Search & Rescue</option>
-                </select>
+        <form class="emergency-form" id="emergencyForm">
+        <h2>Emergency Service Request</h2>
+        
+        <div class="service-options">
+            <!-- Water Service -->
+            <div class="service-card" data-service="water" onclick="selectService(this)">
+                <i class="fas fa-tint service-icon water-service"></i>
+                <h3>Water Emergency</h3>
+                <div class="service-details">
+                    <p>Immediate water deployment for fire suppression</p>
+                    <ul>
+                        <li>High-pressure water cannons</li>
+                        <li>5000L capacity</li>
+                        <li>Thermal targeting</li>
+                    </ul>
+                </div>
             </div>
 
-            <button type="submit" class="emergency-btn">
+            <!-- Oxygen Service -->
+            <div class="service-card" data-service="oxygen" onclick="selectService(this)">
+                <i class="fas fa-lungs service-icon oxygen-service"></i>
+                <h3>Oxygen Supply</h3>
+                <div class="service-details">
+                    <p>Emergency oxygen mask deployment</p>
+                    <ul>
+                        <li>Smart mask delivery</li>
+                        <li>Air quality monitoring</li>
+                        <li>30-minute oxygen supply</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Fire Prevention -->
+            <div class="service-card" data-service="fireball" onclick="selectService(this)">
+                <i class="fas fa-fire-extinguisher service-icon fire-service"></i>
+                <h3>Fire Prevention System</h3>
+                <div class="service-details">
+                    <p>Advanced fire containment solution</p>
+                    <ul>
+                        <li>Fire-retardant foam</li>
+                        <li>Explosion prevention</li>
+                        <li>Heat-resistant coating</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" id="selectedService" name="service" required>
+        
+        <div class="form-group">
+            <button type="submit" class="submit-btn">
                 <i class="fas fa-paper-plane"></i> Send Emergency Request
             </button>
-        </form>
-    </div>
+        </div>
+    </form>
 
+    <script>
+        let selectedService = null;
+
+        function selectService(card) {
+            // Remove previous selection
+            document.querySelectorAll('.service-card').forEach(item => {
+                item.classList.remove('selected');
+            });
+
+            // Set new selection
+            card.classList.add('selected');
+            selectedService = card.dataset.service;
+            document.getElementById('selectedService').value = selectedService;
+        }
+
+        // Form validation
+        document.getElementById('emergencyForm').addEventListener('submit', function(e) {
+            if (!selectedService) {
+                e.preventDefault();
+                alert('Please select an emergency service!');
+                return false;
+            }
+            
+            // Add your submission logic here
+            alert(`Emergency request submitted for ${selectedService} service!`);
+            this.reset();
+            document.querySelectorAll('.service-card').forEach(item => {
+                item.classList.remove('selected');
+            });
+            return false;
+        });
+    </script>
+        </div>
     
 
     <section class="emergency-options">
@@ -771,17 +1071,14 @@
 </footer>
 
 
+<script>
 
-
-    <script>
-
-        // Emergency Functions
+       // Emergency Functions
         function triggerEmergency() {
             if(confirm("Initiate emergency call? Our team will contact you immediately!")) {
                 window.location.href = 'tel:18003766639';
             }
-        }
-
+    }
         // Form Handling
         function handleSubmit(e) {
             e.preventDefault();
@@ -806,178 +1103,10 @@
             .bindPopup('<b>Active Emergency</b><br>Fire response in progress')
             .openPopup();
 
-      //Water / Oxygen Mask / Fire prevention Ball
-
-         // Add new JavaScript functions
-        let selectedService = null;
-
-        function selectService(service) {
-            selectedService = service;
-            document.querySelectorAll('.option-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            event.currentTarget.classList.add('selected');
-            document.getElementById('selected-service').value = service;
-            
-            // Add visual feedback
-            switch(service) {
-                case 'water':
-                    showAnimation('💧 Water drones deploying...', '#00a8ff');
-                    break;
-                case 'oxygen':
-                    showAnimation('🫁 Oxygen masks loading...', '#4cd137');
-                    break;
-                case 'fireball':
-                    showAnimation('🔥 Fire containment activated...', '#ff4757');
-                    break;
-            }
-        }
-
-        function showAnimation(text, color) {
-            const anim = document.createElement('div');
-            anim.style.position = 'fixed';
-            anim.style.top = '20px';
-            anim.style.left = '50%';
-            anim.style.transform = 'translateX(-50%)';
-            anim.style.padding = '15px 30px';
-            anim.style.background = color;
-            anim.style.color = 'white';
-            anim.style.borderRadius = '25px';
-            anim.style.zIndex = '1000';
-            anim.innerText = text;
-            
-            document.body.appendChild(anim);
-            
-            setTimeout(() => {
-                anim.remove();
-            }, 2000);
-        }
-
-        // Update handleSubmit function
-        function handleSubmit(e) {
-            e.preventDefault();
-            if (!selectedService) {
-                alert('Please select an emergency service first!');
-                return;
-            }
-            
-            const serviceNames = {
-                water: 'Water Drone Strike',
-                oxygen: 'Oxygen Mask Drop',
-                fireball: 'Fireball Containment'
-            };
-
-            alert(`${serviceNames[selectedService]} activated!\nHelp is on the way!`);
-            e.target.reset();
-            document.querySelectorAll('.option-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            selectedService = null;
-        }
-        
-         // Animated Statistics Counter
-         const counters = document.querySelectorAll('.stat-number');
-        
-        const animateCounters = () => {
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const increment = target / 100;
-                let current = 0;
-
-                const updateCounter = () => {
-                    current += increment;
-                    if(current < target) {
-                        counter.textContent = Math.ceil(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target.toLocaleString();
-                    }
-                };
-
-                updateCounter();
-            });
-        };
-
-        // Trigger when section is in view
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    animateCounters();
-                    observer.unobserve(entry.target);
-                }
-            });
-        });
-
-        observer.observe(document.querySelector('.stats-section'));
-
-        // Carousel Auto-Scroll
-        const carousel = document.querySelector('.testimonial-carousel');
-        let scrollAmount = 0;
-        
-        setInterval(() => {
-            scrollAmount += 300;
-            if(scrollAmount > carousel.scrollWidth) scrollAmount = 0;
-            carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
-        }, 5000);
-
-        // Modified counter initialization
-        function animateCounters() {
-            const counters = document.querySelectorAll('.stat-number');
-            
-            counters.forEach(counter => {
-                const target = parseFloat(counter.getAttribute('data-target'));
-                let current = 0;
-                const duration = 2000; // Total animation time
-                const increment = target / (duration / 16); // 60fps frame time
-
-                const updateCounter = () => {
-                    current += increment;
-                    if(current < target) {
-                        counter.textContent = Number.isInteger(target) ? 
-                            Math.floor(current) : 
-                            current.toFixed(1);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = Number.isInteger(target) ? 
-                            target : 
-                            target.toFixed(1);
-                    }
-                };
-
-                // Start immediately
-                requestAnimationFrame(updateCounter);
-            });
-        }
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', animateCounters);
-
-        function animateCounters() {
-    // ... previous counter logic ...
-}
-
-// First try immediately
-animateCounters();
-
-// Fallback for elements below fold
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting) {
-            const counter = entry.target;
-            if(counter.textContent === '0') {
-                // Only animate if not already started
-                animateSingleCounter(counter);
-            }
-        }
-    });
-});
-
-document.querySelectorAll('.stat-number').forEach(counter => {
-    observer.observe(counter);
-});
 
 
-    </script>
+      
+</script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </body>
 </html>
