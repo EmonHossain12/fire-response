@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Drone</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-red: #FF3B30;
+            --dark-red: #CC2A24;
+            --emergency-orange: #FF9500;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            line-height: 1.6;
+        }
+
+        /* Emergency Header */
+        .emergency-alert {
+            background: var(--primary-red);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                        url('https://images.unsplash.com/photo-1586348943529-beaae6c28db9') center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        /* Emergency Button */
+        .emergency-btn {
+            background: var(--primary-red);
+            color: white;
+            padding: 20px 50px;
+            border-radius: 30px;
+            font-size: 1.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(255,59,48,0.3);
+        }
+
+        .emergency-btn:hover {
+            background: var(--dark-red);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255,59,48,0.4);
+        }
+
+        /* Request Form */
+        .request-container {
+            max-width: 800px;
+            margin: -80px auto 50px;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .emergency-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .form-input {
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary-red);
+            outline: none;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 4rem 2rem;
+            background: #fff;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: #f8f9fa;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+
+         /* Add fire option styles */
+         .emergency-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+       
+        .option-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .option-card.selected {
+            border-color: var(--primary-red);
+            background: #fff5f5;
+        }
+        .option-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .water { color: #00a8ff; }
+        .oxygen { color: #4cd137; }
+        .fire { color: #ff4757; }
+
+        .option-card:hover .option-icon {
+            transform: scale(1.2);
+        }
+       
+        .water-effect::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(0,168,255,0) 0%,
+                rgba(0,168,255,0.3) 50%,
+                rgba(0,168,255,0) 100%);
+            animation: waterFlow 3s infinite;
+        }
+        
+        /* Services Section */
+        .services-section {
+            padding: 5rem 2rem;
+            background: #f9f9f9;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* Service Specific Colors */
+        .fire-suppression .service-icon {
+            background: rgba(255,75,75,0.1);
+            color: #ff4b4b;
+        }
+
+        .medical-delivery .service-icon {
+            background: rgba(76,209,55,0.1);
+            color: #4cd137;
+        }
+
+        .search-rescue .service-icon {
+            background: rgba(0,168,255,0.1);
+            color: #00a8ff;
+        }
+
+        .hazard-detection .service-icon {
+            background: rgba(255,159,0,0.1);
+            color: #ff9f00;
+        }
+
+        .service-features {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .service-features li {
+            margin: 0.5rem 0;
+            position: relative;
+        }
+
+        .service-features li::before {
+            content: "✓";
+            color: currentColor;
+            position: absolute;
+            left: -1.5rem;
+        }
+
+        .service-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            z-index: 1000;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        /* Statistics Section */
+        .stats-section {
+            background: linear-gradient(135deg, #0a2e5a, #091c2e);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00a8ff;
+            margin: 1rem 0;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 4rem 2rem;
+            background: #f9f9f9;
+        }
+
+        .testimonial-carousel {
+            display: grid;
+            grid-auto-flow: column;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 2rem 0;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            min-width: 300px;
+            scroll-snap-align: start;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .client-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        /* Certifications Section */
+        .certifications-section {
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .certification-badge {
+            padding: 1.5rem;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .certification-badge:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Comparison Chart */
+        .comparison-section {
+            padding: 4rem 2rem;
+            overflow-x: auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.5rem;
+            border: 1px solid #eee;
+            text-align: center;
+        }
+
+        .comparison-table th {
+            background: #f8f9fa;
+        }
+
+        .feature-icon {
+            color: #4cd137;
+            font-size: 1.2rem;
+        }
+        .stats-section {
+            padding: 5rem 2rem;
+            background: #0a192f;
+            color: white;
+            text-align: center;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            padding: 2rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            color: #00a8ff;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #4cd137;
+            margin: 1rem 0;
+            font-family: monospace;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        /* Footer style */
+
+        .footer {
+            background-color: #0a192f;
+            color: #ffffff;
+            padding: 2rem 1rem;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1rem;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+            color: #c0c0c0;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-links a:hover {
+            opacity: 0.7;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+            
+            .social-links {
+                margin-top: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .request-container {
+                margin: -40px 20px 50px;
+                padding: 1.5rem;
+            }
+        }
+         
+    </style>
+</head>
+<body>
+    <div class="emergency-alert">
+        <i class="fas fa-exclamation-triangle"></i> 24/7 EMERGENCY DRONE RESPONSE - CALL 16228
+    </div>
+
+    <section class="hero">
+        <h1>Emergency Cloud Drone Fire Response</h1>
+        <p>Rapid aerial assistance when seconds matter</p>
+        <button class="emergency-btn" onclick="triggerEmergency()">
+            <i class="fas fa-bell"></i> Request Immediate Help
+        </button>
+    </section>
+
+    <div class="request-container">
+        <form class="emergency-form" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" class="form-input" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label>Emergency Location</label>
+                <input type="text" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+                <label>Emergency Type</label>
+                <select class="form-input" required>
+                    <option value="">Select emergency type</option>
+                    <option>Building Fire</option>
+                    <option>Wildfire</option>
+                    <option>Industrial Accident</option>
+                    <option>Search & Rescue</option>
+                </select>
+            </div>
+
+            <button type="submit" class="emergency-btn">
+                <i class="fas fa-paper-plane"></i> Send Emergency Request
+            </button>
+        </form>
+    </div>
+
+    
+
+    <section class="emergency-options">
+      <div class="option-card" data-service="water" onclick="selectService('water')">
+          <i class="fas fa-tint option-icon water"></i>
+          <h3>Water Drone Strike</h3>
+          <p>Immediate fire suppression with high-pressure water cannons</p>
+          <div class="water-effect"></div>
+      </div>
+
+      <div class="option-card" data-service="oxygen" onclick="selectService('oxygen')">
+          <i class="fas fa-lungs option-icon oxygen"></i>
+          <h3>Oxygen Mask Drop</h3>
+          <p>Emergency oxygen supply delivery to trapped victims</p>
+      </div>
+
+      <div class="option-card" data-service="fireball" onclick="selectService('fireball')">
+          <i class="fas fa-fire option-icon fire"></i>
+          <h3>Fire Prevention ball Containment</h3>
+          <p>Specialized foam drones for explosive fire situations</p>
+      </div>
+  </section>
+
+  <!-- Update the form section -->
+  <!-- <div class="request-container">
+      <form class="emergency-form" onsubmit="handleSubmit(event)">
+          <input type="hidden" id="selected-service" name="service" required>
+          Keep other form elements -->
+      <!-- </form>
+  </div> -->
+
+    <section class="features">
+        <div class="feature-card">
+            <i class="fas fa-clock fa-3x"></i>
+            <h3>5-Minute Response Time</h3>
+            <p>Automated drone deployment within 300 seconds of request</p>
+        </div>
+        
+        <div class="feature-card">
+            <i class="fas fa-fire-extinguisher fa-3x"></i>
+            <h3>Fire Suppression</h3>
+            <p>Specialized retardant delivery and thermal imaging</p>
+        </div>
+        
+        <div class="feature-card">
+            <i class="fas fa-map-marked-alt fa-3x"></i>
+            <h3>Live Tracking</h3>
+            <p>Real-time incident mapping and progress monitoring</p>
+        </div>
+    </section>
+
+
+  <!-- Service Modals -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+  
+  <div id="fireModal" class="service-modal">
+      <!-- Detailed fire service content -->
+  </div>
+
+   <!-- Statistics Section -->
+   <section class="stats-section">
+    <h2>Our Impact in Emergencies</h2>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <i class="fas fa-fire fa-2x"></i>
+            <div class="stat-number" data-target="257">0</div>
+            <p>Fires Contained</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-life-ring fa-2x"></i>
+            <div class="stat-number" data-target="891">0</div>
+            <p>Lives Saved</p>
+        </div>
+        <div class="stat-card">
+            <i class="fas fa-clock fa-2x"></i>
+            <div class="stat-number" data-target="4.3">0</div>
+            <p>Avg. Response Time (mins)</p>
+        </div>
+    </div>
+</section>
+
+<section class="comparison-section">
+    <h2>Service Tier Comparison</h2>
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Basic Response</th>
+                <th>Pro Emergency</th>
+                <th>Enterprise Critical</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>24/7 Monitoring</td>
+                <td><i class="fas fa-check feature-icon"></i></td>
+                <td><i class="fas fa-check feature-icon"></i></td>
+                <td><i class="fas fa-check feature-icon"></i></td>
+            </tr>
+            <tr>
+                <td>Simultaneous Drones</td>
+                <td>2</td>
+                <td>5</td>
+                <td>Unlimited</td>
+            </tr>
+            <!-- Add more comparison rows -->
+        </tbody>
+    </table>
+</section>
+
+<section class="services-section">
+  <h2>Our Emergency Drone Services</h2>
+  <div class="service-grid">
+      <!-- Fire Suppression -->
+      <div class="service-card fire-suppression" onclick="showServiceModal('fire')">
+          <div class="service-icon">
+              <i class="fas fa-fire-extinguisher"></i>
+          </div>
+          <h3>Fire Suppression Drones</h3>
+          <p>Immediate aerial firefighting response with advanced retardant systems</p>
+          <ul class="service-features">
+              <li>Thermal imaging cameras</li>
+              <li>500L payload capacity</li>
+              <li>AI-powered targeting</li>
+          </ul>
+      </div>
+
+      <!-- Medical Delivery -->
+      <div class="service-card medical-delivery" onclick="showServiceModal('medical')">
+          <div class="service-icon">
+              <i class="fas fa-medkit"></i>
+          </div>
+          <h3>Emergency Medical Delivery</h3>
+          <p>Critical supplies delivery in disaster zones</p>
+          <ul class="service-features">
+              <li>Defibrillator deployment</li>
+              <li>Blood/plasma transport</li>
+              <li>Temperature-controlled units</li>
+          </ul>
+      </div>
+
+      <!-- Search & Rescue -->
+      <div class="service-card search-rescue" onclick="showServiceModal('rescue')">
+          <div class="service-icon">
+              <i class="fas fa-search-location"></i>
+          </div>
+          <h3>Search & Rescue Operations</h3>
+          <p>24/7 life detection and rescue support</p>
+          <ul class="service-features">
+              <li>Thermal imaging</li>
+              <li>Two-way communication</li>
+              <li>Payload drop system</li>
+          </ul>
+      </div>
+</section>
+
+
+<footer class="footer">
+  <div class="footer-content">
+      <div class="footer-left">
+          <p class="copyright">© 2023 Cloud Drone. All rights reserved.</p>
+          <p class="tagline">Supporting communities through technology and innovation</p>
+      </div>
+      <div class="social-links">
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+      </div>
+  </div>
+</footer>
+
+
+
+
+    <script>
+
+        // Emergency Functions
+        function triggerEmergency() {
+            if(confirm("Initiate emergency call? Our team will contact you immediately!")) {
+                window.location.href = 'tel:18003766639';
+            }
+        }
+
+        // Form Handling
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert('Emergency request received! Drones deploying to your location.');
+            e.target.reset();
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('Status Update: Drones en route - ETA 4 minutes');
+            }, 3000);
+        }
+
+        // Initialize Map (Leaflet.js)
+        const map = L.map('response-map').setView([40.7128, -74.0060], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add sample emergency marker
+        L.marker([40.7128, -74.0060])
+            .addTo(map)
+            .bindPopup('<b>Active Emergency</b><br>Fire response in progress')
+            .openPopup();
+
+      //Water / Oxygen Mask / Fire prevention Ball
+
+         // Add new JavaScript functions
+        let selectedService = null;
+
+        function selectService(service) {
+            selectedService = service;
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            document.getElementById('selected-service').value = service;
+            
+            // Add visual feedback
+            switch(service) {
+                case 'water':
+                    showAnimation('💧 Water drones deploying...', '#00a8ff');
+                    break;
+                case 'oxygen':
+                    showAnimation('🫁 Oxygen masks loading...', '#4cd137');
+                    break;
+                case 'fireball':
+                    showAnimation('🔥 Fire containment activated...', '#ff4757');
+                    break;
+            }
+        }
+
+        function showAnimation(text, color) {
+            const anim = document.createElement('div');
+            anim.style.position = 'fixed';
+            anim.style.top = '20px';
+            anim.style.left = '50%';
+            anim.style.transform = 'translateX(-50%)';
+            anim.style.padding = '15px 30px';
+            anim.style.background = color;
+            anim.style.color = 'white';
+            anim.style.borderRadius = '25px';
+            anim.style.zIndex = '1000';
+            anim.innerText = text;
+            
+            document.body.appendChild(anim);
+            
+            setTimeout(() => {
+                anim.remove();
+            }, 2000);
+        }
+
+        // Update handleSubmit function
+        function handleSubmit(e) {
+            e.preventDefault();
+            if (!selectedService) {
+                alert('Please select an emergency service first!');
+                return;
+            }
+            
+            const serviceNames = {
+                water: 'Water Drone Strike',
+                oxygen: 'Oxygen Mask Drop',
+                fireball: 'Fireball Containment'
+            };
+
+            alert(`${serviceNames[selectedService]} activated!\nHelp is on the way!`);
+            e.target.reset();
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            selectedService = null;
+        }
+        
+         // Animated Statistics Counter
+         const counters = document.querySelectorAll('.stat-number');
+        
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const increment = target / 100;
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if(current < target) {
+                        counter.textContent = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                };
+
+                updateCounter();
+            });
+        };
+
+        // Trigger when section is in view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        });
+
+        observer.observe(document.querySelector('.stats-section'));
+
+        // Carousel Auto-Scroll
+        const carousel = document.querySelector('.testimonial-carousel');
+        let scrollAmount = 0;
+        
+        setInterval(() => {
+            scrollAmount += 300;
+            if(scrollAmount > carousel.scrollWidth) scrollAmount = 0;
+            carousel.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+        }, 5000);
+
+        // Modified counter initialization
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                let current = 0;
+                const duration = 2000; // Total animation time
+                const increment = target / (duration / 16); // 60fps frame time
+
+                const updateCounter = () => {
+                    current += increment;
+                    if(current < target) {
+                        counter.textContent = Number.isInteger(target) ? 
+                            Math.floor(current) : 
+                            current.toFixed(1);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = Number.isInteger(target) ? 
+                            target : 
+                            target.toFixed(1);
+                    }
+                };
+
+                // Start immediately
+                requestAnimationFrame(updateCounter);
+            });
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', animateCounters);
+
+        function animateCounters() {
+    // ... previous counter logic ...
+}
+
+// First try immediately
+animateCounters();
+
+// Fallback for elements below fold
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting) {
+            const counter = entry.target;
+            if(counter.textContent === '0') {
+                // Only animate if not already started
+                animateSingleCounter(counter);
+            }
+        }
+    });
+});
+
+document.querySelectorAll('.stat-number').forEach(counter => {
+    observer.observe(counter);
+});
+
+
+    </script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</body>
+</html>
