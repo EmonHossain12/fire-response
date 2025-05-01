@@ -670,6 +670,215 @@
             transform: scale(1.05);
             background: #cc0000;
         }
+    /* partership */
+    :root {
+        --primary-color: #2a2a2a;
+        --secondary-color: #00a8ff;
+        --accent-color: #ff4444;
+        --text-color: #444;
+        --transition-speed: 0.4s;
+    }
+
+    .partnership-section {
+        padding: 4rem 2rem;
+        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .partner-card {
+        position: relative;
+        background: white;
+        border: 2px solid transparent;
+        border-radius: 15px;
+        padding: 2rem;
+        margin: 1rem;
+        transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        transform-style: preserve-3d;
+    }
+
+    .partner-card:hover {
+        transform: translateY(-10px) rotateX(5deg) rotateY(-5deg);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        border-color: var(--secondary-color);
+    }
+
+    .verified-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        color: #4cd137;
+        font-size: 1.5rem;
+        filter: drop-shadow(0 2px 4px rgba(76, 209, 55, 0.3));
+        transition: transform var(--transition-speed);
+    }
+
+    .partner-card:hover .verified-badge {
+        transform: scale(1.2) rotate(15deg);
+        animation: pulse 1.5s infinite;
+    }
+
+    .partner-details ul {
+        list-style: none;
+        padding: 1rem 0;
+    }
+
+    .partner-details li {
+        margin: 0.8rem 0;
+        padding: 0.8rem;
+        background: rgba(0, 168, 255, 0.05);
+        border-radius: 8px;
+        transition: transform var(--transition-speed);
+    }
+
+    .partner-details li:hover {
+        transform: translateX(10px);
+        background: rgba(0, 168, 255, 0.1);
+    }
+
+    .verify-link {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        background: rgba(0, 168, 255, 0.1);
+        transition: all var(--transition-speed);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .verify-link:hover {
+        background: var(--secondary-color);
+        color: white;
+        padding-right: 2rem;
+    }
+
+    .verify-link:hover::after {
+        content: '→';
+        position: absolute;
+        right: 1rem;
+        opacity: 1;
+    }
+
+    .program-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 15px;
+        border: 2px solid transparent;
+        transition: all var(--transition-speed);
+    }
+
+    .program-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--secondary-color);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .stat-item {
+        display: inline-block;
+        margin: 0 1rem;
+        padding: 1rem;
+        border-radius: 15px;
+        background: rgba(0, 168, 255, 0.05);
+        transition: transform var(--transition-speed);
+    }
+
+    .stat-item:hover {
+        transform: scale(1.05);
+    }
+
+    .partnership-form {
+        max-width: 800px;
+        margin: 3rem auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        transition: box-shadow var(--transition-speed);
+    }
+
+    .partnership-form:hover {
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all var(--transition-speed);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 168, 255, 0.3);
+    }
+
+    .btn-primary::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, 
+            transparent 25%,
+            rgba(255,255,255,0.1) 50%,
+            transparent 75%);
+        animation: shine 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    @keyframes shine {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    .government-compliance {
+        background: linear-gradient(45deg, rgba(0, 87, 146, 0.05), transparent);
+        padding: 2rem;
+        border-left: 4px solid var(--secondary-color);
+        margin: 2rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .government-compliance::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(0, 168, 255, 0.05) 10px,
+            rgba(0, 168, 255, 0.05) 20px
+        );
+        z-index: -1;
+    }
+
+    @media (max-width: 768px) {
+        .partner-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .partner-card {
+            margin: 1rem 0;
+        }
+    }
+
 
         @media (min-width: 768px) {
             .footer-content {
@@ -794,7 +1003,10 @@
             transform: scale(1.05);
             background: #cc0000;
         }
+        
     </style>
+
+    
 </head>
 <body>
     <div class="emergency-alert">
@@ -1056,20 +1268,136 @@
 </section>
 
 
-<footer class="footer">
-  <div class="footer-content">
-      <div class="footer-left">
-          <p class="copyright">© 2023 Cloud Drone. All rights reserved.</p>
-          <p class="tagline">Supporting communities through technology and innovation</p>
-      </div>
-      <div class="social-links">
-          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-      </div>
-  </div>
-</footer>
+  
 
+
+<section class="partnership-section">
+    <div class="container">
+        <h2>Official Partnerships & Certifications</h2>
+        
+        <!-- Verified Government Partnerships -->
+        <div class="government-compliance">
+            <h3><i class="fas fa-shield-alt"></i> Government Compliant Protocols</h3>
+            <p>Certified under Bangladesh National Emergency Response Framework (NERF) 2023</p>
+            <ul>
+                <li>Approved by Ministry of Disaster Management and Relief</li>
+                <li>Compliant with Fire Service Act 2021</li>
+                <li>Registered under NGO Affairs Bureau</li>
+            </ul>
+        </div>
+
+        <!-- Partner Organizations Grid -->
+        <div class="partner-grid">
+            <!-- BRAC Partnership -->
+            <div class="partner-card">
+                <span class="verified-badge"><i class="fas fa-check-circle"></i></span>
+                <div class="partner-header">
+                    <img src="images/Brack.png" alt="BRAC" style="height: 50px">
+                    <h3>BRAC Humanitarian Partnership</h3>
+                </div>
+                <div class="partner-details">
+                    <p><strong>Collaboration Areas:</strong></p>
+                    <ul>
+                        <li><i class="fas fa-users-cog"></i> Community Emergency Response Training</li>
+                        <li><i class="fas fa-map-marked-alt"></i> Rural Area Coverage Program</li>
+                        <li><i class="fas fa-hand-holding-water"></i> Flood Response Initiative</li>
+                    </ul>
+                    <a href="#verify-brac" class="verify-link">
+                        <i class="fas fa-external-link-alt"></i> Verify Partnership
+                    </a>
+                </div>
+            </div>
+
+            <!-- Fire Service Collaboration -->
+            <div class="partner-card">
+                <span class="verified-badge"><i class="fas fa-check-circle"></i></span>
+                <div class="partner-header">
+                    <img src="images/Bangladesh_Fire_Service_and_Civil_Defence.png" alt="Fire Service" style="height: 60px">
+                    <h3>Bangladesh Fire Service Integration</h3>
+                </div>
+                <div class="partner-details">
+                    <p><strong>Joint Protocols:</strong></p>
+                    <ul>
+                        <li><i class="fas fa-fire-extinguisher"></i> Combined Drone-Firefighter Drills</li>
+                        <li><i class="fas fa-broadcast-tower"></i> Shared Emergency Communication Network</li>
+                        <li><i class="fas fa-certificate"></i> Certified First Responder Program</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- NGO Program Integration -->
+        <div class="ngo-programs">
+            <div class="program-card">
+                <h4><i class="fas fa-hands-helping"></i> Community Preparedness Program</h4>
+                <p>Joint initiative with BRAC for rural emergency training</p>
+                <div class="program-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">Villages Covered</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2,500+</div>
+                        <div class="stat-label">Trained Volunteers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-left">
+            <p class="copyright">© 2023 Cloud Drone. All rights reserved.</p>
+            <p class="tagline">Supporting communities through technology and innovation</p>
+        </div>
+        <div class="social-links">
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        </div>
+    </div>
+
+  </footer>
+<script>
+    // Partnership Form Validation
+    document.getElementById('officialPartnershipForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate government/NGO credentials
+        const orgType = document.querySelector('select').value;
+        const fileInput = document.querySelector('input[type="file"]');
+        
+        if(!validateOrgType(orgType)) {
+            alert('Please select valid organization type');
+            return;
+        }
+
+        if(!validateFile(fileInput.files[0])) {
+            alert('Please upload valid verification document (PDF/DOC)');
+            return;
+        }
+
+        // Submit form
+        alert('Partnership request received. We will contact you through official channels.');
+        this.reset();
+    });
+
+    function validateOrgType(type) {
+        const validTypes = ['Government Agency', 'Registered NGO', 
+                          'International Organization'];
+        return validTypes.includes(type);
+    }
+
+    function validateFile(file) {
+        const validTypes = ['application/pdf', 
+                          'application/msword',
+                          'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        return file && validTypes.includes(file.type);
+    }
+</script>
 
 <script>
 
@@ -1102,11 +1430,9 @@
             .addTo(map)
             .bindPopup('<b>Active Emergency</b><br>Fire response in progress')
             .openPopup();
-
-
-
-      
+     
 </script>
+
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </body>
 </html>
